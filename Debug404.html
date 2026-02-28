@@ -197,17 +197,9 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
                         <button onclick="fillSuggestion('spotify.com', 'https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn')" class="w-full bg-blue-100 text-blue-700 py-1 rounded font-bold hover:bg-blue-200 transition">Auto-Fill & Load</button>
                     </li>
                     
-                    <!-- <li class="bg-white p-3 rounded shadow-sm border-l-4 border-red-500">
-                        <span class="font-bold text-gray-800 text-sm">🍎 YouTube Pomodoro</span>
-                        <p class="text-[10px] text-gray-500 mt-1 mb-2">50/10 study timer with alarm.</p>
-                        <button onclick="fillSuggestion('youtube.com', 'https://www.youtube.com/watch?v=COmEw4u8Rkk')" class="w-full bg-blue-100 text-blue-700 py-1 rounded font-bold hover:bg-blue-200 transition">Auto-Fill & Load</button>
-                    </li> -->
+                   
 
-                    <!-- <li class="bg-white p-3 rounded shadow-sm border-l-4 border-gray-800">
-                        <span class="font-bold text-gray-800 text-sm">📓 Anime OST Study</span>
-                        <p class="text-[10px] text-gray-500 mt-1 mb-2">Death Note ambient soundtrack.</p>
-                        <button onclick="fillSuggestion('youtube.com', 'https://www.youtube.com/watch?v=VKMWEDm5t64')" class="w-full bg-blue-100 text-blue-700 py-1 rounded font-bold hover:bg-blue-200 transition">Auto-Fill & Load</button>
-                    </li> -->
+                  
 
                     <li class="bg-white p-3 rounded shadow-sm border-l-4 border-blue-600">
                         <span class="font-bold text-gray-800 text-sm">⚙️ C++ Reference</span>
@@ -271,7 +263,7 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
         const provider = new GoogleAuthProvider();
         provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
     
-        // App State
+        
         let points = 0;
         let gametrialsleft = 0;
         let currentUserData = null;
@@ -284,12 +276,11 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
         let sessionMinutes = 25; 
         let timeLeft = sessionMinutes * 60; 
         
-        // --- BREAK LOGIC VARIABLES ---
         let currentPhaseLeft = timeLeft;
         let isBreakTime = false;
         let pendingBreaks = [];
         let workIntervalSecs = 0;
-        // -----------------------------
+        
 
         let isFocusing = false;
         const successChime = new Audio('https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg');
@@ -571,7 +562,7 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             if (currentUserData) await setDoc(doc(db, "users", currentUserData.uid), { preferredTime: sessionMinutes }, { merge: true });
         };
 
-        // --- NEW START SESSION WITH BREAK PROMPTS & UI UPDATE ---
+        
         window.startFocusSession = async () => {
             let breakCountStr = prompt("How many breaks do you want to take during this session? (Enter 0 for no breaks)", "0");
             if (breakCountStr === null) return; // User pressed Cancel
@@ -585,7 +576,7 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
                 pendingBreaks.push(parseInt(dur) || 5);
             }
 
-            // Calculate even work intervals
+            
             if (numBreaks > 0) {
                 workIntervalSecs = Math.floor((sessionMinutes * 60) / (numBreaks + 1));
             } else {
@@ -596,7 +587,7 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             isBreakTime = false;
             isFocusing = true;
 
-            // Update UI elements
+            
             const statusEl = document.getElementById('timer-status');
             statusEl.innerText = "💪 Focus Time! Stay on this screen.";
             statusEl.className = "text-sm text-blue-600 font-bold animate-pulse mb-4";
@@ -605,9 +596,9 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             heroStatusEl.innerText = "💪 Focus Time! Stay on this screen.";
             heroStatusEl.className = "text-2xl md:text-3xl mb-12 z-10 font-medium text-blue-300 animate-pulse";
 
-            // Reveal Full-Screen Hero & Scroll to top
+            
             document.getElementById('hero-timer').classList.remove('hidden');
-            // ▶️ Play video
+            
             const video = document.getElementById('video-video');
             video.currentTime = 0;
             video.play();
@@ -633,13 +624,13 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             }, 1000);
         };
 
-        // --- PHASE TRANSITION LOGIC ---
+    
         async function handlePhaseEnd() {
             const statusEl = document.getElementById('timer-status');
             const heroStatusEl = document.getElementById('hero-timer-status');
 
             if (!isBreakTime) {
-                // Finished a WORK phase
+                
                 if (pendingBreaks.length > 0) {
                     isBreakTime = true;
                     let nextBreakMins = pendingBreaks.shift();
@@ -651,18 +642,18 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
                     heroStatusEl.innerText = `☕ Break Time! (${nextBreakMins} min) You can leave the screen.`;
                     heroStatusEl.className = "text-2xl md:text-3xl mb-12 z-10 font-medium text-green-400 animate-pulse";
                     
-                    // Allow the user to switch tabs/exit fullscreen
+                    
                     if (document.fullscreenElement) document.exitFullscreen().catch(e=>console.log(e));
                     
                     successChime.play();
                     alert(`Great job! Take a ${nextBreakMins} minute break. You can switch tabs now.`);
                     updateTimerDisplay();
                 } else {
-                    // Entire session is done
+                    
                     endSession(true);
                 }
             } else {
-                // Finished a BREAK phase
+                
                 isBreakTime = false;
                 currentPhaseLeft = workIntervalSecs;
                 
@@ -692,13 +683,13 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             const s = (currentPhaseLeft % 60).toString().padStart(2, '0');
             const timeStr = h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
             
-            // Update both normal and hero timer displays
+        
             document.getElementById('timer-display').innerText = timeStr;
             document.getElementById('hero-timer-display').innerText = timeStr;
         }
 
         function endSession(success) {
-            // ⏹ Stop video
+            
             const video = document.getElementById('video-video');
             video.pause();
             video.currentTime = 0;
@@ -706,7 +697,7 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             isFocusing = false;
             isBreakTime = false;
             
-            // Hide Hero Overlay
+            
             document.getElementById('hero-timer').classList.add('hidden');
             if (document.fullscreenElement) document.exitFullscreen().catch(e=>console.log(e));
             
@@ -720,9 +711,9 @@ class="fixed top-0 left-0 w-full h-full object-cover -z-10">
             
             if (success) { 
                 successChime.play();
-                const pointsEarned = sessionMinutes * 2; // Original focus time dictates points
+                const pointsEarned = sessionMinutes * 2; 
                 points += pointsEarned; 
-                // 🎮 Unlock Game With 3 Trials
+                
 gameTrialsLeft = 3;
 
 setTimeout(() => {
@@ -812,30 +803,30 @@ setTimeout(() => {
             loadStudySite();
         };
 
-        // --- STUDY VAULT (WITH UNIVERSAL URL SANITIZER) ---
+        
         window.loadStudySite = () => {
             let urlStr = document.getElementById('url-input').value.trim();
             if (!urlStr) return;
 
-            // 🌟 THE UNIVERSAL SANITIZER (Fixes Proxy-Ception for ALL sites!)
+            
             if (urlStr.includes('api.allorigins.win')) {
-                // Case 1: It's a raw double-proxied link
+                
                 if (urlStr.includes('/raw?url=')) {
                     urlStr = decodeURIComponent(urlStr.split('url=')[1]);
                 } 
-                // Case 2: It's a relative link copied from INSIDE the proxy
+                
                 else {
                     let path = urlStr.replace(/^https?:\/\/api\.allorigins\.win/, '');
-                    // Attach it to whatever base website they were just looking at!
+                    
                     if (window.lastLoadedBaseUrl) {
-                        // Prevent double slashes when merging URLs
+                        
                         if(window.lastLoadedBaseUrl.endsWith('/') && path.startsWith('/')) {
                             path = path.substring(1);
                         }
                         urlStr = window.lastLoadedBaseUrl + (path.startsWith('/') ? '' : '/') + path;
                     }
                 }
-                // Update the visual input box with the cleaned link
+            
                 document.getElementById('url-input').value = urlStr;
             }
 
@@ -845,8 +836,7 @@ setTimeout(() => {
                 const parsedUrl = new URL(urlStr);
                 const requestedDomain = parsedUrl.hostname.replace('www.', '');
 
-                // 🧠 MEMORY CORE: Save the base website for the sanitizer to use later
-                // We only save the origin if it isn't one of our proxy/embed domains
+                
                 if (!requestedDomain.includes('allorigins') && !requestedDomain.includes('youtube') && !requestedDomain.includes('spotify')) {
                     window.lastLoadedBaseUrl = parsedUrl.origin; 
                 }
@@ -888,33 +878,8 @@ setTimeout(() => {
             } catch (e) { alert("Please enter a valid URL format."); }
         };
 
-        // window.checkGameUnlock = () => { 
-        //     if(points >= 20) {
-        //         const gameContainer = document.getElementById('game-container');
-        //         if (gameContainer.classList.contains('hidden')) {
-        //             gameContainer.classList.remove('hidden');
-        //             document.getElementById('game-area').style.display = 'block';
-        //             startGame();
-        //         }
-        //     } 
-        // };
-
-        // function startGame() {
-        //     const gameArea = document.getElementById('game-area');
-        //     gameArea.innerHTML = ''; 
-        //     gameInterval = setInterval(() => {
-        //         const maxX = Math.max(0, (gameArea.clientWidth || 200) - 40);
-        //         const maxY = Math.max(0, (gameArea.clientHeight || 200) - 40);
-        //         const target = document.createElement('div');
-        //         target.className = 'target shadow-lg';
-        //         target.style.left = Math.floor(Math.random() * maxX) + 'px';
-        //         target.style.top = Math.floor(Math.random() * maxY) + 'px';
-                
-        //         target.onclick = () => { target.remove(); points += 2; updateUI(); };
-        //         gameArea.appendChild(target);
-        //         setTimeout(() => { if (target.parentElement) target.remove(); }, 1500);
-        //     }, 1000); 
-        // }
+      
+       
 
     function startGame() {
     const gameArea = document.getElementById('game-area');
