@@ -7,7 +7,7 @@ https://priyalpatel16.github.io/Hacksprint.github.io/
 
 
 ppt:-
-[Uploading Presentation.pdf…]()
+https://www.canva.com/design/DAHCmirxi7k/p1-OgpAMrt9zSB9QIvDwlA/edit?utm_content=DAHCmirxi7k&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 Demo:-
 
