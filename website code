@@ -33,7 +33,7 @@
 
     <div id="hero-timer" class="hidden w-full h-screen bg-cover bg-center flex flex-col justify-center items-center relative text-white" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('image_8f371d.jpg'); background-attachment: fixed;">
         <video id="video-video" class="absolute top-0 left-0 w-full h-full object-cover z-0" muted loop>
-        <source src="video.mp4" type="video/mp4">
+        <source src="https://github.com/Priyalpatel16/Hacksprint/raw/refs/heads/main/video.mp4" type="video/mp4">
     </video>
 
     <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
